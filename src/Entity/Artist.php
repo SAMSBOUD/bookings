@@ -40,6 +40,10 @@ class Artist
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: ArtistType::class)]
     private Collection $artistTypes;
 
+    #[ORM\ManyToOne(inversedBy: 'artist')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Agent $agent = null;
+
    
 
     public function __construct()
@@ -102,6 +106,18 @@ class Artist
                 $artistType->setArtist(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAgent(): ?Agent
+    {
+        return $this->agent;
+    }
+
+    public function setAgent(?Agent $agent): self
+    {
+        $this->agent = $agent;
 
         return $this;
     }
